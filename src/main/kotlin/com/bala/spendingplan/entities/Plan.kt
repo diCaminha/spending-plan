@@ -12,8 +12,10 @@ data class Plan (
     val month: Int,
     val year: Int,
     val totalBudget: BigDecimal,
+    @OneToMany
     val categories: List<Category>?,
     var isActive: Boolean = false,
+    @ManyToOne
     var author: UserPlan,
     var addedAt: LocalDateTime = LocalDateTime.now()
 

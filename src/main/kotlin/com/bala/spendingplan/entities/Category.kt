@@ -12,5 +12,7 @@ data class Category(
     val percentageBudget: Int,
     var currentTotalExpense: BigDecimal? = BigDecimal.valueOf(0),
     @OneToMany(fetch = FetchType.LAZY)
-    var expenses: MutableList<Expense>? = mutableListOf()
+    var expenses: MutableList<Expense>? = mutableListOf(),
+    @ManyToOne
+    val plan: Plan
 )
