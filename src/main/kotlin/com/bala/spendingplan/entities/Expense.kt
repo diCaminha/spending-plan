@@ -1,17 +1,15 @@
 package com.bala.spendingplan.entities
 
 import jakarta.persistence.*
-import lombok.AllArgsConstructor
 import lombok.Getter
 import lombok.NoArgsConstructor
 import lombok.Setter
 import java.math.BigDecimal
 
 @Entity
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 data class Expense(
 
     @Id

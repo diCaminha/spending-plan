@@ -1,21 +1,21 @@
 package com.bala.spendingplan.entities
 
+import com.bala.spendingplan.entities.enums.UserRoles
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import lombok.AllArgsConstructor
 import lombok.Getter
 import lombok.NoArgsConstructor
 import lombok.Setter
 import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 @Entity
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 data class UserPlan (
 
     @Id
@@ -26,40 +26,38 @@ data class UserPlan (
 
     private val password: String,
 
-    private var firstname: String,
-
-    private var lastname: String,
-
-    private var role: String
+    private var role: UserRoles
 
 ) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        TODO("Not yet implemented")
+        if (role == UserRoles.ADMIN)
+            return mutableListOf(SimpleGrantedAuthority("ROLE_ADMIN"), SimpleGrantedAuthority("ROLE_USER"))
+        return mutableListOf(SimpleGrantedAuthority("ROLE_USER"))
     }
 
     override fun getPassword(): String {
-        TODO("Not yet implemented")
+        return password
     }
 
     override fun getUsername(): String {
-        TODO("Not yet implemented")
+        return username
     }
 
     override fun isAccountNonExpired(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
     override fun isAccountNonLocked(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
     override fun isCredentialsNonExpired(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
     override fun isEnabled(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
 }
