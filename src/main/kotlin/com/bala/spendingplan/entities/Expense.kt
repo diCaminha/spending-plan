@@ -1,14 +1,25 @@
 package com.bala.spendingplan.entities
 
 import jakarta.persistence.*
+import lombok.AllArgsConstructor
+import lombok.Getter
+import lombok.NoArgsConstructor
+import lombok.Setter
 import java.math.BigDecimal
 
 @Entity
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 data class Expense(
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
-    val value: BigDecimal,
+    private val id: Long? = null,
+
+    private val value: BigDecimal,
+
     @ManyToOne
-    val category: Category
+    private val category: Category
 )

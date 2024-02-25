@@ -1,22 +1,37 @@
 package com.bala.spendingplan.entities
 
 import jakarta.persistence.*
+import lombok.AllArgsConstructor
+import lombok.Getter
+import lombok.NoArgsConstructor
+import lombok.Setter
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Entity
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 data class Plan (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
-    val month: Int,
-    val year: Int,
-    val totalBudget: BigDecimal,
+    private val id: Long? = null,
+
+    private val month: Int,
+
+    private val year: Int,
+
+    private val totalBudget: BigDecimal,
+
     @OneToMany
-    val categories: List<Category>?,
-    var isActive: Boolean = false,
+    private val categories: List<Category>?,
+
+    private var isActive: Boolean = false,
+
     @ManyToOne
-    var author: UserPlan,
-    var addedAt: LocalDateTime = LocalDateTime.now()
+    private var author: UserPlan,
+
+    private var addedAt: LocalDateTime = LocalDateTime.now()
 
 )
