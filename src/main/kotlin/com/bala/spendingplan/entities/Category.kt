@@ -1,30 +1,26 @@
 package com.bala.spendingplan.entities
 
 import jakarta.persistence.*
-import lombok.Getter
 import lombok.NoArgsConstructor
-import lombok.Setter
 import java.math.BigDecimal
 
 @Entity
-@Getter
-@Setter
 @NoArgsConstructor
 data class Category(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val id: Long? = null,
+    val id: Long? = null,
 
-    private val name: String,
+    val name: String,
 
-    private val percentageBudget: Int,
+    val percentageBudget: Int,
 
-    private var currentTotalExpense: BigDecimal? = BigDecimal.valueOf(0),
+    var currentTotalExpense: BigDecimal? = BigDecimal.valueOf(0),
 
     @OneToMany(fetch = FetchType.LAZY)
-    private var expenses: MutableList<Expense>? = mutableListOf(),
+    var expenses: MutableList<Expense>? = mutableListOf(),
 
     @ManyToOne
-    private val plan: Plan
+    val plan: Plan
 )

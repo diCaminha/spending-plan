@@ -12,7 +12,9 @@ class AuthService(
 
     override fun loadUserByUsername(username: String?): UserDetails {
         if (username != null) {
-            userRepository.findByUsername(username)
+            return userRepository.findByUsername(username)
+        } else {
+            throw Exception()
         }
     }
 }

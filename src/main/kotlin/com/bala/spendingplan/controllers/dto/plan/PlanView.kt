@@ -6,7 +6,6 @@ import java.time.LocalDateTime
 
 @NoArgsConstructor
 data class PlanView(
-
     val id: Long?,
     val month: Int,
     val year: Int,

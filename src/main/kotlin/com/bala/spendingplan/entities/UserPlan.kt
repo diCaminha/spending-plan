@@ -5,28 +5,24 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import lombok.Getter
 import lombok.NoArgsConstructor
-import lombok.Setter
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 @Entity
-@Getter
-@Setter
 @NoArgsConstructor
 data class UserPlan (
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val id: Long? = null,
+    val id: Long? = null,
 
-    private var login: String,
+    var login: String,
 
-    private val password: String,
+    val password: String,
 
-    private var role: UserRoles
+    var role: UserRoles
 
 ) : UserDetails {
 
