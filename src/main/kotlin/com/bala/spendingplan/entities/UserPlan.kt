@@ -18,13 +18,21 @@ data class UserPlan (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
-    var login: String,
+    private var username: String,
 
-    val password: String,
+    private var password: String,
 
     var role: UserRoles
 
 ) : UserDetails {
+
+    fun setPassword(password: String) {
+        this.password = password
+    }
+
+    fun setUsername(username: String) {
+        this.username = username
+    }
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         if (role == UserRoles.ADMIN)

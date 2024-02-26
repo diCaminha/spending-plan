@@ -35,7 +35,7 @@ class AuthenticationController(
 
         val encryptPassword = BCryptPasswordEncoder().encode(registerDto.password)
         val userToRegister = UserPlan(
-            login = registerDto.username,
+            username = registerDto.username,
             password = encryptPassword,
             role = registerDto.role
         )
