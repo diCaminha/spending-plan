@@ -6,9 +6,9 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
 
 @Service
-class AuthService(
+class UserDetailServiceImpl(
     private val userRepository: UserRepository
-): UserDetailsService {
+    ): UserDetailsService {
 
     override fun loadUserByUsername(username: String?): UserDetails {
         if (username != null) {

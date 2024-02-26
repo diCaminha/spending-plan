@@ -1,14 +1,12 @@
 package com.bala.spendingplan.controllers
 
-import com.bala.spendingplan.controllers.dto.LoginDTO
+import com.bala.spendingplan.controllers.dto.AuthenticationResponseDto
+import com.bala.spendingplan.controllers.dto.LoginDto
 import com.bala.spendingplan.controllers.dto.RegisterDto
 import com.bala.spendingplan.entities.UserPlan
-import com.bala.spendingplan.services.AuthService
+import com.bala.spendingplan.services.AuthenticationService
 import com.bala.spendingplan.services.UserService
 import org.springframework.http.ResponseEntity
-import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.Authentication
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -18,15 +16,13 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/auth")
 class AuthenticationController(
-    private val authService: AuthService,
-    private val authenticationManager: AuthenticationManager,
+    private val authenticationService: AuthenticationService,
     private val userService: UserService
 ) {
 
     @PostMapping("/login")
-    fun login(@RequestBody loginDto: LoginDTO): ResponseEntity<Any> {
-        val usernamePassword = UsernamePasswordAuthenticationToken(loginDto.username, loginDto.password)
-        val authenticated = authenticationManager.authenticate(usernamePassword)
+    fun login(@RequestBody loginDto: LoginDto): ResponseEntity<AuthenticationResponseDto> {
+        val authenticated = authenticationService.authentication(loginDto)
         return ResponseEntity.ok(authenticated)
     }
 
