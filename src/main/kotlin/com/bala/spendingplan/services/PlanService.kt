@@ -28,7 +28,6 @@ class PlanService (
             month = planDto.month,
             year = planDto.year,
             totalBudget = planDto.totalBudget,
-            categories = planDto.categories,
             author = userService.findById(planDto.authorId)
         )
 

@@ -1,9 +1,11 @@
 package com.bala.spendingplan.controllers
 
+import com.bala.spendingplan.controllers.dto.CategoryDto
+import com.bala.spendingplan.controllers.dto.NewCategoryDto
 import com.bala.spendingplan.services.PlanService
 import com.bala.spendingplan.controllers.dto.plan.NewPlanDto
 import com.bala.spendingplan.controllers.dto.plan.PlanView
-import com.bala.spendingplan.entities.Plan
+import com.bala.spendingplan.services.CategoryService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -17,7 +19,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/plans")
 class PlanController(
-    private val planService: PlanService
+    private val planService: PlanService,
+    private val categoryService: CategoryService
 ) {
 
     @GetMapping
@@ -33,5 +36,11 @@ class PlanController(
     @PostMapping
     fun register(@RequestBody @Valid planDto: NewPlanDto): ResponseEntity<PlanView> {
         return ResponseEntity.status(HttpStatus.CREATED).body(planService.register(planDto))
+    }
+
+    @PostMapping("/{planId}/categories")
+    fun createCategory(@RequestBody newCategoryDto: NewCategoryDto): ResponseEntity<CategoryDto> {
+        val categoryCreated = categoryService.create(newCategoryDto)
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoryCreated)
     }
 }
