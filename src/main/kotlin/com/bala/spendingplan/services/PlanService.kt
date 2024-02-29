@@ -35,4 +35,9 @@ class PlanService (
 
         return planViewMapper.map(planSaved)
     }
+
+    fun listByUser(username: String): List<PlanView> {
+        val plans = planRepository.findByAuthorUsername(username)
+        return plans.map { planViewMapper.map(it) }
+    }
 }

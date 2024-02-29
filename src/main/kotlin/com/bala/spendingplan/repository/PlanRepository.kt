@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface PlanRepository: CrudRepository<Plan, Long> {
+    fun findByAuthorUsername(username: String) : List<Plan>
 }

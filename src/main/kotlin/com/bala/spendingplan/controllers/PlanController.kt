@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -24,7 +25,10 @@ class PlanController(
 ) {
 
     @GetMapping
-    fun list() : List<PlanView> {
+    fun list(@RequestParam("username", required = false) username: String) : List<PlanView> {
+        if (username != null) {
+            return planService.listByUser(username)
+        }
         return planService.listAll()
     }
 
