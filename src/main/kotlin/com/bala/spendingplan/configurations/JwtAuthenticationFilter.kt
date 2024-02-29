@@ -1,6 +1,7 @@
 package com.bala.spendingplan.configurations
 
 import com.bala.spendingplan.services.UserDetailServiceImpl
+import com.bala.spendingplan.util.HeaderRequestUtil
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -15,6 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter
 class JwtAuthenticationFilter(
     private val userDetailServiceImpl: UserDetailServiceImpl,
     private val tokenService: TokenService,
+    private val headerRequestUtil: HeaderRequestUtil
 ) : OncePerRequestFilter() {
 
     override fun doFilterInternal(

@@ -7,6 +7,7 @@ import com.bala.spendingplan.services.PlanService
 import com.bala.spendingplan.controllers.dto.plan.NewPlanDto
 import com.bala.spendingplan.controllers.dto.plan.PlanView
 import com.bala.spendingplan.services.CategoryService
+import com.bala.spendingplan.util.HeaderRequestUtil
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -25,14 +26,13 @@ import org.springframework.web.client.HttpClientErrorException.Unauthorized
 class PlanController(
     private val planService: PlanService,
     private val categoryService: CategoryService,
-    private val tokenService: TokenService
+    private val headerRequestUtil: HeaderRequestUtil
 ) {
 
     @GetMapping
     fun list(@RequestParam("username", required = false) username: String,
              @RequestHeader("Authorization") authorizationHeader: String) : ResponseEntity<List<PlanView>> {
-        val token = authorizationHeader.substringAfter("Bearer ")
-        val usernameFromToken = tokenService.extractUsername(token)
+        val usernameFromToken = headerRequestUtil.getTokenFromAuthorization(authorizationHeader)
         if (usernameFromToken != username) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null)
         }
