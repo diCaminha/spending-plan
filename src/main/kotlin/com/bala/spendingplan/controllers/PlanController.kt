@@ -1,6 +1,5 @@
 package com.bala.spendingplan.controllers
 
-import com.bala.spendingplan.configurations.TokenService
 import com.bala.spendingplan.controllers.dto.CategoryDto
 import com.bala.spendingplan.controllers.dto.NewCategoryDto
 import com.bala.spendingplan.services.PlanService
@@ -12,6 +11,7 @@ import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.client.HttpClientErrorException.Unauthorized
 
 @RestController
 @RequestMapping("/plans")
@@ -53,5 +52,13 @@ class PlanController(
     fun createCategory(@RequestBody newCategoryDto: NewCategoryDto): ResponseEntity<CategoryDto> {
         val categoryCreated = categoryService.create(newCategoryDto)
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryCreated)
+    }
+
+    @PatchMapping("/{id}/active")
+    fun active(@PathVariable("id") id: Long,
+               @RequestHeader("Authorization") authorizationHeader: String): ResponseEntity<PlanView> {
+        val usernameFromToken = headerRequestUtil.getTokenFromAuthorization(authorizationHeader)
+        val planActivated = planService.activatePlanById(id, usernameFromToken)
+        return ResponseEntity.status(HttpStatus.OK).body(planActivated)
     }
 }
