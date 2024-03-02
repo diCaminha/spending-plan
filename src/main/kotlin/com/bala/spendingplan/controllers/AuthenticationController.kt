@@ -1,8 +1,8 @@
 package com.bala.spendingplan.controllers
 
-import com.bala.spendingplan.controllers.dto.AuthenticationResponseDto
-import com.bala.spendingplan.controllers.dto.LoginDto
-import com.bala.spendingplan.controllers.dto.RegisterDto
+import com.bala.spendingplan.dto.auth.AuthenticationResponseDto
+import com.bala.spendingplan.dto.auth.LoginDto
+import com.bala.spendingplan.dto.auth.RegisterDto
 import com.bala.spendingplan.entities.UserPlan
 import com.bala.spendingplan.services.AuthenticationService
 import com.bala.spendingplan.services.UserService

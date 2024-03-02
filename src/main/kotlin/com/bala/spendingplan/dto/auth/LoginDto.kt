@@ -1,4 +1,4 @@
-package com.bala.spendingplan.controllers.dto
+package com.bala.spendingplan.dto.auth
 
 data class LoginDto (
     val username: String,

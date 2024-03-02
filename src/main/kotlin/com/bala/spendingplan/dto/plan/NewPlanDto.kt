@@ -1,4 +1,4 @@
-package com.bala.spendingplan.controllers.dto.plan
+package com.bala.spendingplan.dto.plan
 
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min

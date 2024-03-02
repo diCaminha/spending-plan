@@ -1,4 +1,4 @@
-package com.bala.spendingplan.controllers.dto
+package com.bala.spendingplan.dto.auth
 
 import com.bala.spendingplan.entities.enums.UserRoles
 

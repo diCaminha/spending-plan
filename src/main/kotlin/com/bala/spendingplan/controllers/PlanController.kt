@@ -1,10 +1,11 @@
 package com.bala.spendingplan.controllers
 
-import com.bala.spendingplan.controllers.dto.CategoryDto
-import com.bala.spendingplan.controllers.dto.NewCategoryDto
+import com.bala.spendingplan.dto.category.CategoryDto
+import com.bala.spendingplan.dto.category.NewCategoryDto
+import com.bala.spendingplan.dto.plan.ActivePlanDto
 import com.bala.spendingplan.services.PlanService
-import com.bala.spendingplan.controllers.dto.plan.NewPlanDto
-import com.bala.spendingplan.controllers.dto.plan.PlanView
+import com.bala.spendingplan.dto.plan.NewPlanDto
+import com.bala.spendingplan.dto.plan.PlanView
 import com.bala.spendingplan.entities.Plan
 import com.bala.spendingplan.services.CategoryService
 import com.bala.spendingplan.util.HeaderRequestUtil
@@ -73,10 +74,10 @@ class PlanController(
 
     @GetMapping("/active/users/{username}")
     fun getActivePlanFromUser(@PathVariable("username") username: String,
-                              @RequestHeader("Authorization") authorizationHeader: String): ResponseEntity<Plan> {
+                              @RequestHeader("Authorization") authorizationHeader: String): ResponseEntity<ActivePlanDto> {
         val usernameFromToken = headerRequestUtil.getTokenFromAuthorization(authorizationHeader)
-        val activePlan = planService.getActivePlanByUser(username)
-        return ResponseEntity.status(HttpStatus.OK).body(activePlan)
+        val activePlanDto = planService.getActivePlanByUser(username)
+        return ResponseEntity.status(HttpStatus.OK).body(activePlanDto)
 
 
     }

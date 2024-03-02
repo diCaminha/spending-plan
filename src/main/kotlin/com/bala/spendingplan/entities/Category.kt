@@ -1,5 +1,7 @@
 package com.bala.spendingplan.entities
 
+import com.fasterxml.jackson.annotation.JsonBackReference
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import lombok.NoArgsConstructor
 import java.math.BigDecimal
@@ -18,9 +20,11 @@ data class Category(
 
     var currentTotalExpense: BigDecimal? = BigDecimal.valueOf(0),
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     var expenses: MutableList<Expense>? = mutableListOf(),
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "plan_id")
+    @JsonBackReference
     val plan: Plan
 )

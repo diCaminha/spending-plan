@@ -1,11 +1,13 @@
 package com.bala.spendingplan.services
 
-import com.bala.spendingplan.controllers.dto.plan.NewPlanDto
-import com.bala.spendingplan.controllers.dto.plan.PlanView
+import com.bala.spendingplan.dto.plan.ActivePlanDto
+import com.bala.spendingplan.dto.plan.NewPlanDto
+import com.bala.spendingplan.dto.plan.PlanView
 import com.bala.spendingplan.entities.Plan
 import com.bala.spendingplan.exceptions.DuplicateActivePlanException
 import com.bala.spendingplan.exceptions.NotFoundException
 import com.bala.spendingplan.exceptions.UnauthorizedAccessException
+import com.bala.spendingplan.mapper.ActivePlanDtoMapper
 import com.bala.spendingplan.mapper.PlanViewMapper
 import com.bala.spendingplan.repository.PlanRepository
 import org.springframework.stereotype.Service
@@ -14,7 +16,8 @@ import org.springframework.stereotype.Service
 class PlanService (
     private val userService: UserService,
     private val planViewMapper: PlanViewMapper,
-    private val planRepository: PlanRepository
+    private val planRepository: PlanRepository,
+    private val activePlanDtoMapper: ActivePlanDtoMapper
     ) {
 
     fun listAll(): List<PlanView> {
@@ -49,7 +52,7 @@ class PlanService (
         if (username != usernameFromToken) {
             throw UnauthorizedAccessException("the user requestor is not the user owner of the plan")
         }
-        if (planRepository.findByisActiveTrueAndAuthorAndIdNot(plan.author, id) != null) {
+        if (planRepository.findByisActiveTrueAndAuthorAndIdNot(plan.author, id).isPresent) {
             throw DuplicateActivePlanException("Already exist a plan activated.")
         }
         plan.isActive = true
@@ -71,7 +74,7 @@ class PlanService (
         return planViewMapper.map(plan)
     }
 
-    fun getActivePlanByUser(username: String): Plan? {
+    fun getActivePlanByUser(username: String): ActivePlanDto {
         val activePlan =
             planRepository
                 .findByAuthorUsernameAndIsActiveTrue(username)
@@ -81,7 +84,7 @@ class PlanService (
             throw UnauthorizedAccessException("the user requestor is not the user owner of the plan")
         }
 
-        return activePlan
+        return activePlanDtoMapper.map(activePlan)
 
     }
 }

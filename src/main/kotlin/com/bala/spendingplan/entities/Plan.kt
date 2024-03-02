@@ -1,5 +1,6 @@
 package com.bala.spendingplan.entities
 
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.*
 import lombok.NoArgsConstructor
 import java.math.BigDecimal
@@ -18,8 +19,9 @@ data class Plan (
 
     val totalBudget: BigDecimal,
 
-    @OneToMany
-    val categories: List<Category>? = mutableListOf(),
+    @OneToMany(mappedBy = "plan", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    val categories: List<Category> = mutableListOf(),
 
     var isActive: Boolean = false,
 

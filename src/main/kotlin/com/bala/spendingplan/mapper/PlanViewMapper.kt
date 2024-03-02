@@ -1,6 +1,6 @@
 package com.bala.spendingplan.mapper
 
-import com.bala.spendingplan.controllers.dto.plan.PlanView
+import com.bala.spendingplan.dto.plan.PlanView
 import com.bala.spendingplan.entities.Plan
 import org.springframework.stereotype.Component
 

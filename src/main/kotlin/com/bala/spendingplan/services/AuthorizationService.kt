@@ -2,8 +2,8 @@ package com.bala.spendingplan.services
 
 import com.bala.spendingplan.configurations.JwtProperties
 import com.bala.spendingplan.configurations.TokenService
-import com.bala.spendingplan.controllers.dto.AuthenticationResponseDto
-import com.bala.spendingplan.controllers.dto.LoginDto
+import com.bala.spendingplan.dto.auth.AuthenticationResponseDto
+import com.bala.spendingplan.dto.auth.LoginDto
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.userdetails.UserDetails

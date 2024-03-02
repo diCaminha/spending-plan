@@ -1,4 +1,4 @@
-package com.bala.spendingplan.controllers.dto.error
+package com.bala.spendingplan.dto.error
 
 import java.time.LocalDateTime
 

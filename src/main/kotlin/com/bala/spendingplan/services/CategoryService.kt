@@ -1,7 +1,7 @@
 package com.bala.spendingplan.services
 
-import com.bala.spendingplan.controllers.dto.CategoryDto
-import com.bala.spendingplan.controllers.dto.NewCategoryDto
+import com.bala.spendingplan.dto.category.CategoryDto
+import com.bala.spendingplan.dto.category.NewCategoryDto
 import com.bala.spendingplan.mapper.CategoryMapper
 import com.bala.spendingplan.repository.CategoryRepository
 import org.springframework.stereotype.Service

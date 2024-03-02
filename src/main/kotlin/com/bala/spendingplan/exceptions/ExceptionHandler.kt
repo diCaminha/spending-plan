@@ -1,6 +1,6 @@
 package com.bala.spendingplan.exceptions
 
-import com.bala.spendingplan.controllers.dto.error.ErrorView
+import com.bala.spendingplan.dto.error.ErrorView
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ExceptionHandler

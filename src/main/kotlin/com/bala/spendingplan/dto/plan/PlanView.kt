@@ -1,6 +1,5 @@
-package com.bala.spendingplan.controllers.dto.plan
+package com.bala.spendingplan.dto.plan
 
-import com.bala.spendingplan.controllers.dto.CategoryDto
 import lombok.NoArgsConstructor
 import java.math.BigDecimal
 import java.time.LocalDateTime

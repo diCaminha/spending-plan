@@ -1,4 +1,4 @@
-package com.bala.spendingplan.controllers.dto
+package com.bala.spendingplan.dto.category
 
 data class NewCategoryDto (
     val name: String,
