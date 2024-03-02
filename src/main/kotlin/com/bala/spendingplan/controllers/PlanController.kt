@@ -54,11 +54,19 @@ class PlanController(
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryCreated)
     }
 
-    @PatchMapping("/{id}/active")
+    @PatchMapping("/{id}/activate")
     fun active(@PathVariable("id") id: Long,
                @RequestHeader("Authorization") authorizationHeader: String): ResponseEntity<PlanView> {
         val usernameFromToken = headerRequestUtil.getTokenFromAuthorization(authorizationHeader)
         val planActivated = planService.activatePlanById(id, usernameFromToken)
+        return ResponseEntity.status(HttpStatus.OK).body(planActivated)
+    }
+
+    @PatchMapping("/{id}/deactivate")
+    fun deactivate(@PathVariable("id") id: Long,
+               @RequestHeader("Authorization") authorizationHeader: String): ResponseEntity<PlanView> {
+        val usernameFromToken = headerRequestUtil.getTokenFromAuthorization(authorizationHeader)
+        val planActivated = planService.deactivatePlanById(id, usernameFromToken)
         return ResponseEntity.status(HttpStatus.OK).body(planActivated)
     }
 }

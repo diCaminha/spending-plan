@@ -57,4 +57,17 @@ class PlanService (
 
         return planViewMapper.map(plan)
     }
+
+    fun deactivatePlanById(id: Long, usernameFromToken: String?): PlanView {
+        val plan = planRepository.findById(id).orElseThrow {NotFoundException("Plan not found")}
+        val username = plan.author.username
+        if (username != usernameFromToken) {
+            throw UnauthorizedAccessException("the user requestor is not the user owner of the plan")
+        }
+
+        plan.isActive = false
+        planRepository.save(plan)
+
+        return planViewMapper.map(plan)
+    }
 }
