@@ -23,4 +23,32 @@ class ExceptionHandler {
             path = request.servletPath
         )
     }
+
+    @ExceptionHandler(UnauthorizedAccessException::class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    fun handleUnauthorizedAccess(
+        exception: UnauthorizedAccessException,
+        request: HttpServletRequest
+    ) : ErrorView {
+        return ErrorView(
+            status = HttpStatus.UNAUTHORIZED.value(),
+            error = HttpStatus.UNAUTHORIZED.name,
+            message = exception.message,
+            path = request.servletPath
+        )
+    }
+
+    @ExceptionHandler(DuplicateActivePlanException::class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    fun handleDuplicateActivePlan(
+        exception: DuplicateActivePlanException,
+        request: HttpServletRequest
+    ) : ErrorView {
+        return ErrorView(
+            status = HttpStatus.CONFLICT.value(),
+            error = HttpStatus.CONFLICT.name,
+            message = exception.message,
+            path = request.servletPath
+        )
+    }
 }
