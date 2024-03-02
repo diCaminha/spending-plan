@@ -10,4 +10,5 @@ import java.util.*
 interface PlanRepository: CrudRepository<Plan, Long> {
     fun findByAuthorUsername(username: String) : List<Plan>
     fun findByisActiveTrueAndAuthorAndIdNot(author: UserPlan, id: Long): Optional<Plan>
+    fun findByAuthorUsernameAndIsActiveTrue(username: String): Optional<Plan>
 }

@@ -70,4 +70,18 @@ class PlanService (
 
         return planViewMapper.map(plan)
     }
+
+    fun getActivePlanByUser(username: String): Plan? {
+        val activePlan =
+            planRepository
+                .findByAuthorUsernameAndIsActiveTrue(username)
+                .orElseThrow { NotFoundException("Not found any plan active") }
+
+        if (activePlan.author.username != username) {
+            throw UnauthorizedAccessException("the user requestor is not the user owner of the plan")
+        }
+
+        return activePlan
+
+    }
 }
