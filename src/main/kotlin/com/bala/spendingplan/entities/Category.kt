@@ -27,4 +27,8 @@ data class Category(
     @JoinColumn(name = "plan_id")
     @JsonBackReference
     val plan: Plan
-)
+) {
+    fun getOwnerUsername(): String {
+        return plan.author.username
+    }
+}

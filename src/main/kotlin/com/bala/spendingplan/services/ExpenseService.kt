@@ -13,8 +13,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class ExpenseService (
-    private val expenseRepository: ExpenseRepositoryJdbc,
-    private val categoryRepository: CategoryRepository
+    private val expenseRepositoryJdbc: ExpenseRepositoryJdbc,
+    private val categoryRepository: CategoryRepository,
+    private val expenseRepository: ExpenseRepository
 ) {
     fun retrieveAllExpensesFromCategoryId(categoryId: Long, username: String): List<ExpenseDto> {
         val category = categoryRepository
@@ -26,7 +27,7 @@ class ExpenseService (
         if (username != authorUsername)
             throw throw UnauthorizedAccessException("the user requestor is not the user owner of the category")
 
-        return expenseRepository.findExpensesByCategoryId(categoryId)
+        return expenseRepositoryJdbc.findExpensesByCategoryId(categoryId)
 
     }
 
@@ -49,7 +50,9 @@ class ExpenseService (
         )
 
         category.expenses.add(expense)
-        categoryRepository.save(category)
+        category.currentTotalExpense = category.currentTotalExpense!!.add(expense.value)
+
+        expenseRepository.save(expense)
     }
 
 }
