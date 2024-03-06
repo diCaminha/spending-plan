@@ -72,11 +72,10 @@ class PlanController(
         return ResponseEntity.status(HttpStatus.OK).body(planActivated)
     }
 
-    @GetMapping("/active/users/{username}")
-    fun getActivePlanFromUser(@PathVariable("username") username: String,
-                              @RequestHeader("Authorization") authorizationHeader: String): ResponseEntity<ActivePlanDto> {
+    @GetMapping("/active")
+    fun getActivePlanFromUser(@RequestHeader("Authorization") authorizationHeader: String): ResponseEntity<ActivePlanDto> {
         val usernameFromToken = headerRequestUtil.getTokenFromAuthorization(authorizationHeader)
-        val activePlanDto = planService.getActivePlanByUser(username)
+        val activePlanDto = planService.getActivePlanByUser(usernameFromToken!!)
         return ResponseEntity.status(HttpStatus.OK).body(activePlanDto)
 
 

@@ -20,8 +20,8 @@ data class Category(
 
     var currentTotalExpense: BigDecimal? = BigDecimal.valueOf(0),
 
-    @OneToMany
-    var expenses: MutableList<Expense>? = mutableListOf(),
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "category")
+    var expenses: MutableList<Expense> = mutableListOf(),
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "plan_id")
