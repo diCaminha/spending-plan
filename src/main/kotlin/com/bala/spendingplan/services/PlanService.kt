@@ -10,6 +10,7 @@ import com.bala.spendingplan.exceptions.UnauthorizedAccessException
 import com.bala.spendingplan.mapper.ActivePlanDtoMapper
 import com.bala.spendingplan.mapper.PlanViewMapper
 import com.bala.spendingplan.repository.PlanRepository
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
 @Service
@@ -46,13 +47,14 @@ class PlanService (
         return plans.map { planViewMapper.map(it) }
     }
 
+    @Transactional
     fun activatePlanById(id: Long, usernameFromToken: String?): PlanView {
         val plan = planRepository.findById(id).orElseThrow {NotFoundException("Plan not found")}
         val username = plan.author.username
         if (username != usernameFromToken) {
             throw UnauthorizedAccessException("the user requestor is not the user owner of the plan")
         }
-        if (planRepository.findByisActiveTrueAndAuthorAndIdNot(plan.author, id).isPresent) {
+        if (planRepository.checkIfExistsPlanAlreadyActive(plan.author, id)) {
             throw DuplicateActivePlanException("Already exist a plan activated.")
         }
         plan.isActive = true

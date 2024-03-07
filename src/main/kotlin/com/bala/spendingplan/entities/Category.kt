@@ -25,7 +25,7 @@ data class Category(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "plan_id")
-    @JsonBackReference
+    //@JsonBackReference
     val plan: Plan
 ) {
     fun getOwnerUsername(): String {
