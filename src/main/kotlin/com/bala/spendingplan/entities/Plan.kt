@@ -20,7 +20,6 @@ data class Plan (
     val totalBudget: BigDecimal,
 
     @OneToMany(mappedBy = "plan", fetch = FetchType.EAGER)
-    //@JsonManagedReference
     val categories: List<Category> = mutableListOf(),
 
     var isActive: Boolean = false,
