@@ -1,7 +1,6 @@
 package com.bala.spendingplan.services
 
 import com.bala.spendingplan.entities.UserPlan
-import com.bala.spendingplan.exceptions.NotFoundException
 import com.bala.spendingplan.repository.UserRepository
 import org.springframework.stereotype.Service
 

@@ -1,10 +1,12 @@
 package com.bala.spendingplan.entities
 
 import com.bala.spendingplan.entities.enums.UserRoles
+import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.validation.constraints.NotBlank
 import lombok.NoArgsConstructor
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -18,8 +20,11 @@ data class UserPlan (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
+    @Column(unique = true)
+    @NotBlank
     private var username: String,
 
+    @NotBlank
     private var password: String,
 
     var role: UserRoles
