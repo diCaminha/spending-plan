@@ -10,6 +10,7 @@ import com.bala.spendingplan.exceptions.UnauthorizedAccessException
 import com.bala.spendingplan.mapper.ActivePlanDtoMapper
 import com.bala.spendingplan.mapper.PlanViewMapper
 import com.bala.spendingplan.repository.PlanRepository
+import jakarta.persistence.Cacheable
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -76,6 +77,7 @@ class PlanService (
         return planViewMapper.map(plan)
     }
 
+    @org.springframework.cache.annotation.Cacheable(cacheNames = ["activeplan"], key = "#root.method.name")
     fun getActivePlanByUser(username: String): ActivePlanDto {
         val activePlan =
             planRepository

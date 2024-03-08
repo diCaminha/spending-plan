@@ -9,6 +9,7 @@ import com.bala.spendingplan.repository.CategoryRepository
 import com.bala.spendingplan.repository.ExpenseRepository
 import com.bala.spendingplan.repository.ExpenseRepositoryJdbc
 import jakarta.transaction.Transactional
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.stereotype.Service
 
 @Service
@@ -32,6 +33,7 @@ class ExpenseService (
     }
 
     @Transactional
+    @CacheEvict(cacheNames = ["activeplan"], allEntries = true)
     fun addExpense(newExpenseDto: NewExpenseDto, username: String) {
         val category = categoryRepository
             .findById(newExpenseDto.categoryId)

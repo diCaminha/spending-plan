@@ -1,5 +1,6 @@
 package com.bala.spendingplan.dto.category
 
+import java.io.Serializable
 import java.math.BigDecimal
 
 data class ActiveCategoryDto(
@@ -8,4 +9,4 @@ data class ActiveCategoryDto(
     val percentageBudget: Int,
     val maximumValue: BigDecimal,
     val currentTotalExpense: BigDecimal
-)
+): Serializable
