@@ -10,16 +10,21 @@ import com.bala.spendingplan.exceptions.UnauthorizedAccessException
 import com.bala.spendingplan.mapper.ActivePlanDtoMapper
 import com.bala.spendingplan.mapper.PlanViewMapper
 import com.bala.spendingplan.repository.PlanRepository
-import jakarta.persistence.Cacheable
+import io.lettuce.core.RedisCommandTimeoutException
 import jakarta.transaction.Transactional
+import org.springframework.cache.support.AbstractCacheManager
+import org.springframework.dao.QueryTimeoutException
+import org.springframework.data.redis.RedisConnectionFailureException
 import org.springframework.stereotype.Service
+import java.net.ConnectException
 
 @Service
 class PlanService (
     private val userService: UserService,
     private val planViewMapper: PlanViewMapper,
     private val planRepository: PlanRepository,
-    private val activePlanDtoMapper: ActivePlanDtoMapper
+    private val activePlanDtoMapper: ActivePlanDtoMapper,
+    private val cacheManager: AbstractCacheManager
     ) {
 
     fun listAll(): List<PlanView> {
@@ -77,8 +82,28 @@ class PlanService (
         return planViewMapper.map(plan)
     }
 
-    @org.springframework.cache.annotation.Cacheable(cacheNames = ["activeplan"], key = "#root.method.name")
+    //@org.springframework.cache.annotation.Cacheable(cacheNames = ["activeplan"], key = "#username")
     fun getActivePlanByUser(username: String): ActivePlanDto {
+        val activePlanCache = cacheManager.getCache("activeplan")
+        try {
+            val cacheValue = activePlanCache?.get(username)
+            if (cacheValue != null) {
+                return cacheValue.get() as ActivePlanDto
+            }
+            val activePlanDto = getActivePlanFromDatabase(username)
+            activePlanCache?.put(username, activePlanDto)
+            return activePlanDto
+
+        } catch (e: RedisConnectionFailureException) {
+            println("Redis server is unreachable for user: $username")
+            return getActivePlanFromDatabase(username)
+        } catch (e: QueryTimeoutException) {
+            println("Connection to Redis server failed for user: $username")
+            return getActivePlanFromDatabase(username)
+        }
+    }
+
+    fun getActivePlanFromDatabase(username: String): ActivePlanDto {
         val activePlan =
             planRepository
                 .findByAuthorUsernameAndIsActiveTrue(username)
@@ -89,6 +114,5 @@ class PlanService (
         }
 
         return activePlanDtoMapper.map(activePlan)
-
     }
 }
