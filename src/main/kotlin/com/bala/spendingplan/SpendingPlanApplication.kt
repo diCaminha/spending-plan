@@ -12,3 +12,4 @@ class SpendingPlanApplication
 fun main(args: Array<String>) {
 	runApplication<SpendingPlanApplication>(*args)
 }
+	
